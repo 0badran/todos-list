@@ -29,7 +29,7 @@ export default function Sidebar() {
       <DrawerTrigger asChild>
         <List />
       </DrawerTrigger>
-      <DrawerContent className="h-screen w-96">
+      <DrawerContent className="h-screen w-96 dark:bg-gray-800">
         {
           links.map((link) => {
             const LinkIcon = link.icon;

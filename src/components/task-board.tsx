@@ -14,7 +14,7 @@ export default function TaskBoard() {
 
 
   return (
-    <div className="bg-[url('/images/bg-createTask.jpg')] lg:bg-[url('/images/bg-createTask1.jpg')] rounded mt-7 p-16 text-white dark:text-gray-400">
+    <div className="bg-cover bg-[url('/images/bg-createTask.jpg')] lg:bg-[url('/images/bg-createTask1.jpg')] rounded mt-7 p-16 text-white dark:text-gray-400">
       {
         isForm ?
           <TaskForm setIsForm={setIsForm} />
@@ -30,7 +30,7 @@ export default function TaskBoard() {
                 Create one
               </Button>
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent className="dark:text-white dark:bg-gray-800">
               <p>Add Task</p>
             </TooltipContent>
           </Tooltip>

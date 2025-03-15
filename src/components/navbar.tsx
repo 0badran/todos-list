@@ -3,6 +3,8 @@ import { Home, List } from "lucide-react";
 import { useSidebarState } from "@/context/sidebar-state";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import Link from "next/link";
+import ModeToggle from "./mode-toggle";
+import { Button } from "./ui/button";
 
 
 export default function Navbar() {
@@ -12,11 +14,13 @@ export default function Navbar() {
     <nav className="bg-sky-400 fixed top-0 z-20 w-full grid grid-cols-5 p-2 text-white rounded-t-md content-center dark:text-gray-400 dark:bg-sky-800">
       {/* Left */}
       <div className="col-span-1 flex gap-2 justify-around items-center md:gap-6">
-        <button onClick={() => setIsOpen(!isOpen)} className="p-2 rounded cursor-pointer transition hover:duration-300 hover:bg-gray-800 dark:hover:bg-white">
+        <Button size='icon' onClick={() => setIsOpen(!isOpen)} className="bg-transparent cursor-pointer shadow-none">
           <List className="text-xl md:text-2xl dark:text-gray-400" />
-        </button>
-        <Link href='/' className="p-2 rounded cursor-pointer transition hover:duration-300 hover:bg-gray-800 dark:hover:bg-white">
-          <Home className="text-xl md:text-2xl dark:text-gray-400" />
+        </Button>
+        <Link href='/'>
+          <Button size='icon' onClick={() => setIsOpen(!isOpen)} className="bg-transparent cursor-pointer shadow-none">
+            <Home className="text-xl md:text-2xl dark:text-gray-400" />
+          </Button>
         </Link>
       </div>
       {/* Middle */}
@@ -26,7 +30,7 @@ export default function Navbar() {
       </div>
       {/* Right */}
       <div className="col-span-1 gap-2 flex justify-around items-center md:gap-6">
-        {/* <DarkThemeToggle className="text-white rounded-lg transition hover:duration-300 hover:bg-gray-800 dark:hover:bg-white" /> */}
+        <ModeToggle />
         <Avatar>
           <AvatarImage src='' />
           <AvatarFallback>cn</AvatarFallback>
