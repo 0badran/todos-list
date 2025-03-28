@@ -18,7 +18,7 @@ export default function Navbar() {
           <List className="text-xl md:text-2xl dark:text-gray-400" />
         </Button>
         <Link href='/'>
-          <Button size='icon' onClick={() => setIsOpen(!isOpen)} className="bg-transparent cursor-pointer shadow-none">
+          <Button size='icon' className="bg-transparent cursor-pointer shadow-none">
             <Home className="text-xl md:text-2xl dark:text-gray-400" />
           </Button>
         </Link>

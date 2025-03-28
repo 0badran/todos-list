@@ -1,3 +1,13 @@
+## Screens
+- ![home page](/public/screens/screens1.png)
+
+- ![todos page](/public/screens/screens2.png)
+
+- ![remove task dialog](/public/screens/screens3.png)
+
+- ![navigation bar](/public/screens/screens4.png)
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started

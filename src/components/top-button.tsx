@@ -1,10 +1,9 @@
 "use client";
 
 import clsx from "clsx";
-import { useEffect, useState } from "react";
 import { ArrowUp } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
-import Link from "next/link";
 
 export default function TopButton() {
    const [isVisible, setIsVisible] = useState(false);
@@ -26,13 +25,11 @@ export default function TopButton() {
 
 
    return (
-      <Link href="#">
-         <Button className={clsx(`fixed hidden right-16 bottom-16`, {
-            "block": isVisible
-         })}
-         >
-            <ArrowUp className="animate-bounce" />
-         </Button>
-      </Link>
+      <Button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className={clsx(`fixed hidden right-16 bottom-16`, {
+         "block": isVisible
+      })}
+      >
+         <ArrowUp className="animate-bounce" />
+      </Button>
    );
 }
