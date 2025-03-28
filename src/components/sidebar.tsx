@@ -29,12 +29,12 @@ export default function Sidebar() {
       <DrawerTrigger asChild>
         <List />
       </DrawerTrigger>
-      <DrawerContent className="h-screen w-96 dark:bg-gray-800">
+      <DrawerContent className="h-screen w-90 dark:bg-gray-800">
         {
           links.map((link) => {
             const LinkIcon = link.icon;
-            return <Link key={link.name} href={link.href} className="cursor-pointer">
-              <div className={clsx(`p-3 flex items-center gap-2 rounded`, {
+            return <Link key={link.name} href={link.href}>
+              <div onClick={() => setIsOpen(false)} className={clsx(`p-3 flex items-center gap-2 rounded`, {
                 "bg-sky-100 text-sky-600": pathname === link.href || pathname.startsWith(`${link.href}/`)
               })}>
                 <LinkIcon size={"1.5em"} className="text-sky-400" /> <span>{link.name}</span>
