@@ -1,8 +1,8 @@
 "use client";
 import { restoreTask } from "@/api/actions";
-import { Button } from "./ui/button";
+import { toastError, toastSuccess } from "@/helpers/global-toasts";
 import { useState } from "react";
-import { toast } from "sonner";
+import { Button } from "./ui/button";
 
 
 export default function RestoreTaskButton({ id }: { id: number }) {
@@ -10,21 +10,15 @@ export default function RestoreTaskButton({ id }: { id: number }) {
     const handleRestoreTask = async (id: number) => {
         setState(true);
         const data = await restoreTask(id);
-        if (data.error) {
-            toast.error(data.message, {
-                style: {
-                    background: "#F05252",
-                    color: "white"
-                }
-            });
-            return;
-        }
-        toast.success(data.message);
         setState(false);
+        if (data.error) {
+            toastError(data.message);
+        }
+        toastSuccess(data.message);
     }
     return (
         <Button variant='secondary' disabled={state} onClick={() => handleRestoreTask(id)}>
-            {state ? "Restored..." : "Restore"}
+            {state ? "Restoring..." : "Restore"}
         </Button>
     )
 }

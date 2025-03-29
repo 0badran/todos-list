@@ -1,33 +1,23 @@
 "use client";
 
-import { useState } from "react";
-import { CircleAlert } from 'lucide-react';
 import { removeTask } from "@/api/actions";
-import { toast } from "sonner";
+import { toastError, toastSuccess } from "@/helpers/global-toasts";
+import { CircleAlert } from 'lucide-react';
+import { useState } from "react";
 import { Button } from "./ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 
 export default function RemoveTaskButton({ id }: { id: number }) {
     const [isPending, setIsPending] = useState<boolean>();
     const handleRemoveTask = async (id: number) => {
         setIsPending(true);
         const data = await removeTask(id);
-        if (data.error) {
-            toast.error(data.message, {
-                style: {
-                    background: "#F05252",
-                    color: "white"
-                }
-            });
-            return;
-        }
-        toast.error(data.message, {
-            style: {
-                background: "#F05252",
-                color: "white"
-            }
-        });
         setIsPending(false);
+        if (data.error) {
+            return toastError(data.message);
+
+        }
+        toastSuccess(data.message);
     }
     return (
         <>
@@ -51,9 +41,11 @@ export default function RemoveTaskButton({ id }: { id: number }) {
                             <Button disabled={isPending} className="w-full border border-transparent bg-red-700 text-white focus:ring-4 focus:ring-red-300 enabled:hover:bg-red-800 dark:bg-red-600 dark:focus:ring-red-900 dark:enabled:hover:bg-red-700" onClick={() => handleRemoveTask(id)}>
                                 {isPending ? "Task removed..." : "Yes, I'm sure"}
                             </Button>
-                            <Button disabled={isPending} variant={"secondary"}>
-                                No, cancel
-                            </Button>
+                            <DialogClose asChild>
+                                <Button disabled={isPending} variant={"secondary"}>
+                                    No, cancel
+                                </Button>
+                            </DialogClose>
                         </div>
                     </div>
                 </DialogContent>

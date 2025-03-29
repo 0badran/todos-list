@@ -1,5 +1,5 @@
 "use client";
-import { useSidebarState } from "@/context/sidebar-state";
+import { useSidebarState } from "@/zustand/sidebar-state";
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -33,8 +33,8 @@ export default function Sidebar() {
         {
           links.map((link) => {
             const LinkIcon = link.icon;
-            return <Link key={link.name} href={link.href} className="cursor-pointer">
-              <div className={clsx(`p-3 flex items-center gap-2 rounded`, {
+            return <Link key={link.name} href={link.href}>
+              <div onClick={() => setIsOpen(false)} className={clsx(`p-3 flex items-center gap-2 rounded`, {
                 "bg-sky-100 text-sky-600": pathname === link.href || pathname.startsWith(`${link.href}/`)
               })}>
                 <LinkIcon size={"1.5em"} className="text-sky-400" /> <span>{link.name}</span>

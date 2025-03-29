@@ -1,8 +1,8 @@
 "use client";
-import { useRef, useState } from "react";
 import { createTodo } from "@/api/actions";
+import { toastSuccess } from "@/helpers/global-toasts";
+import { useRef, useState } from "react";
 import TaskSubmitButton from "./submit-task-button";
-import { toast } from "sonner";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 
@@ -24,18 +24,13 @@ export default function TaskForm({ setIsForm }: { setIsForm: (isForm: boolean) =
          return;
       }
       formRef.current?.reset();
-      toast.success(response.message, {
-         style: {
-            background: "#4CAF50",
-            color: "white"
-         }
-      });
+      toastSuccess(response.message);
    };
 
    return (
       <form ref={formRef} action={clientAction} className="md:w-1/2">
          <div className="mb-3">
-            <Input onChange={() => setState(initialState)} type="text" name="title" placeholder="Title" className="bg-white text-gray-950 dark:text-white dark:bg-gray-400" />
+            <Input onChange={() => setState(initialState)} type="text" name="title" placeholder="Title" className="bg-white text-gray-950 dark:placeholder:text-white dark:text-white dark:bg-gray-400" />
             {state.error && <p aria-live="polite" className="text-red-500 mb-2">{state.message}</p>}
          </div>
          <div className="flex space-x-4">

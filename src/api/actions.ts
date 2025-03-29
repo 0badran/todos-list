@@ -1,6 +1,6 @@
 "use server";
-import { sql } from "@vercel/postgres";
 import { TodoSchema } from "@/lib/definitions";
+import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 
 

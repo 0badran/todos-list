@@ -6,7 +6,7 @@ import Image from "next/image";
 
 
 export default async function Todo() {
-    const { rows } = await sql`SELECT id, title FROM todos WHERE type = 'upcoming' ORDER BY created_at ASC;`;
+    const { rows } = await sql`SELECT id, title FROM todos WHERE type = 'upcoming' ORDER BY created_at DESC;`;
 
     if (!rows.length) return <Image className="mx-auto" unoptimized src="/images/todo-empty.gif" alt="todo task empty" width={450} height={300} />
     return (
