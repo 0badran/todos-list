@@ -1,5 +1,5 @@
 "use client";
-import { restoreTask } from "@/api/actions";
+import { restoreTask } from "@/services";
 import { toastError, toastSuccess } from "@/helpers/global-toasts";
 import { useState } from "react";
 import { Button } from "./ui/button";

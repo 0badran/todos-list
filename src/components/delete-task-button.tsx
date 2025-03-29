@@ -1,5 +1,5 @@
 "use client";
-import { moveTaskToRecycleBin, removeTask } from "@/api/actions";
+import { moveTaskToRecycleBin, removeTask } from "@/services";
 import { toastError, toastSuccess } from "@/helpers/global-toasts";
 import { CircleAlert } from "lucide-react";
 import { useState } from "react";

@@ -3,7 +3,7 @@
 import { FormEvent, useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { editTask } from "@/api/actions";
+import { editTask } from "@/services";
 import { toastError, toastSuccess } from "@/helpers/global-toasts";
 
 export default function EditTask({ id, title }: { id: number, title: string }) {
