@@ -1,6 +1,6 @@
 "use client";
-import { restoreTask } from "@/actions";
-import { toastError, toastSuccess } from "@/helpers/toasts";
+import { restoreTask } from "@/services";
+import { toastError, toastSuccess } from "@/helpers/global-toasts";
 import { useState } from "react";
 import { Button } from "./ui/button";
 
@@ -13,7 +13,6 @@ export default function RestoreTaskButton({ id }: { id: number }) {
         setState(false);
         if (data.error) {
             toastError(data.message);
-            return;
         }
         toastSuccess(data.message);
     }

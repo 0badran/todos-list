@@ -1,6 +1,6 @@
 "use client";
-import { moveTaskToRecycleBin, removeTask } from "@/actions";
-import { toastError, toastSuccess } from "@/helpers/toasts";
+import { moveTaskToRecycleBin, removeTask } from "@/services";
+import { toastError, toastSuccess } from "@/helpers/global-toasts";
 import { CircleAlert } from "lucide-react";
 import { useState } from "react";
 import { Button } from "./ui/button";
@@ -62,7 +62,7 @@ export default function DeleteTaskButton({ id }: { id: number }) {
                             disabled={recycleBinPending}
                             variant={"secondary"}
                         >
-                            Recycle bin
+                            {recycleBinPending ? "Moving..." : "Recycle Bin"}
                         </Button>
                     </div>
                 </div>

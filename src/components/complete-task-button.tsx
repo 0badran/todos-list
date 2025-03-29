@@ -1,18 +1,17 @@
 "use client";
-import { completeTask } from "@/actions";
-import { toastError, toastSuccess } from "@/helpers/toasts";
+import { completeTask } from "@/services";
+import { toastError, toastSuccess } from "@/helpers/global-toasts";
 import { useState } from "react";
 import { Button } from "./ui/button";
 
 
 export default function CompleteTaskButton({ id }: { id: number }) {
    const [isPending, setIsPending] = useState<boolean>();
-
    const handleComplete = async (id: number) => {
       setIsPending(true);
       const data = await completeTask(id);
       setIsPending(false);
-      if (data.code !== 200) {
+      if (data.error) {
          return toastError(data.message);
       }
       toastSuccess(data.message);

@@ -1,10 +1,10 @@
 "use client";
 
-import { editTask } from "@/actions";
-import { toastError, toastSuccess } from "@/helpers/toasts";
 import { FormEvent, useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import { editTask } from "@/services";
+import { toastError, toastSuccess } from "@/helpers/global-toasts";
 
 export default function EditTask({ id, title }: { id: number, title: string }) {
    const [editingId, setEditingId] = useState<number | null>(null);
@@ -17,9 +17,9 @@ export default function EditTask({ id, title }: { id: number, title: string }) {
       setIsLoading(true);
       event.preventDefault();
       const formData = new FormData(event.currentTarget);
-      const data = await editTask(id, formData);
+      const data = await editTask(id, formData.get('title') as string);
       setIsLoading(false);
-      if (data.errors) {
+      if (data.error) {
          return toastError(data.message);
       }
       toastSuccess(data.message);

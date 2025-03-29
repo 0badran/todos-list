@@ -1,5 +1,5 @@
 "use client";
-import { useSidebarState } from "@/context/sidebar-state";
+import { useSidebarState } from "@/zustand/sidebar-state";
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -29,7 +29,7 @@ export default function Sidebar() {
       <DrawerTrigger asChild>
         <List />
       </DrawerTrigger>
-      <DrawerContent className="h-screen w-90 dark:bg-gray-800">
+      <DrawerContent className="h-screen w-96 dark:bg-gray-800">
         {
           links.map((link) => {
             const LinkIcon = link.icon;

@@ -1,6 +1,6 @@
 "use client";
 import { Home, List } from "lucide-react";
-import { useSidebarState } from "@/context/sidebar-state";
+import { useSidebarState } from "@/zustand/sidebar-state";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import Link from "next/link";
 import ModeToggle from "./mode-toggle";
@@ -17,11 +17,11 @@ export default function Navbar() {
         <Button size='icon' onClick={() => setIsOpen(!isOpen)} className="bg-transparent cursor-pointer shadow-none">
           <List className="text-xl md:text-2xl dark:text-gray-400" />
         </Button>
-        <Link href='/'>
-          <Button size='icon' className="bg-transparent cursor-pointer shadow-none">
+        <Button asChild size='icon' className="bg-transparent cursor-pointer shadow-none">
+          <Link href='/'>
             <Home className="text-xl md:text-2xl dark:text-gray-400" />
-          </Button>
-        </Link>
+          </Link>
+        </Button>
       </div>
       {/* Middle */}
       <div className="col-span-3 gap-2 select-none flex justify-center items-center bg-white rounded-full  dark:bg-gray-300 sm:gap-4 md:gap-8">
@@ -36,6 +36,6 @@ export default function Navbar() {
           <AvatarFallback>cn</AvatarFallback>
         </Avatar>
       </div>
-    </nav>
+    </nav >
   )
 }

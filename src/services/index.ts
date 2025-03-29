@@ -1,19 +1,20 @@
 "use server";
-import fetchHelper from "@/helpers/fetch-helper";
+import { TodoSchema } from "@/lib/definitions";
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 
 
-export async function createTask(prevState: unknown, formData: FormData) {
-   const res = await fetchHelper({
-      url: '/todos/create',
-      method: 'POST',
-      body: formData
+export async function createTodo(formData: FormData) {
+   const result = TodoSchema.safeParse({
+      task: formData.get("title")
    });
-   if (res.ok) revalidatePath("/todo");
-   const data = await res.json();
-   data.isSubmitted = true;
-   return data;
+   if (result.error) {
+      return { success: false, error: true, message: "String must contain at least 1 character(s)" };
+   }
+
+   await sql`INSERT INTO todos(title) VALUES (${result.data.task})`;
+   revalidatePath("/todo");
+   return { success: result.success, error: false, message: "Todo Added Successfully!" };
 }
 
 export async function moveTaskToRecycleBin(id: number) {
@@ -44,23 +45,19 @@ export async function restoreTask(id: number) {
 }
 
 export async function completeTask(id: number) {
-   const res = await fetchHelper({
-      url: `/todos/complete/${id}`,
-      method: 'GET'
-   });
-   if (res.ok) revalidatePath("/todo");
-   const data = await res.json();
-   return data;
+   if (!id) {
+      return { success: false, error: true, message: "Invalid task ID" };
+   }
+   await sql`UPDATE todos SET type = 'completed' WHERE id = ${id}`;
+   revalidatePath("/todo");
+   return { success: true, error: false, message: "Task completed!" };
 }
 
-export async function editTask(id: number, formData: FormData) {
-   const res = await fetchHelper({
-      url: `/todos/update/${id}`,
-      method: 'PUT',
-      body: formData
-   });
-   if (res.ok) revalidatePath("/todo");
-   const data = await res.json();
-   data.isSubmitted = true;
-   return data;
+export async function editTask(id: number, newTitle: string) {
+   if (!id) {
+      return { success: false, error: true, message: "Invalid task ID" };
+   }
+   await sql`UPDATE todos SET title = ${newTitle} WHERE id = ${id}`;
+   revalidatePath("/todo");
+   return { success: true, error: false, message: "Task edited successfully!" };
 }
