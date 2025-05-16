@@ -8,17 +8,17 @@ export async function GET() {
                 id SERIAL PRIMARY KEY,
                 title TEXT NOT NULL,
                 type TEXT DEFAULT 'upcoming',
-                created_at TIMESTAMP DEFAULT NOW(),
-                updated_at TIMESTAMP DEFAULT NOW()
+                createdAt TIMESTAMP DEFAULT NOW(),
+                updatedAt TIMESTAMP DEFAULT NOW()
             );`,
             sql`CREATE TABLE IF NOT EXISTS users(
                 id SERIAL PRIMARY KEY,
-                first_name TEXT NOT NULL,
-                last_name TEXT NOT NULL,
+                firstName TEXT NOT NULL,
+                lastName TEXT NOT NULL,
                 email TEXT NOT NULL,
                 hash TEXT NOT NULL,
-                created_at TIMESTAMP DEFAULT NOW(),
-                updated_at TIMESTAMP DEFAULT NOW()
+                createdAt TIMESTAMP DEFAULT NOW(),
+                updatedAt TIMESTAMP DEFAULT NOW()
             );`
         ]);
         return NextResponse.json({ tables }, { status: 200 });

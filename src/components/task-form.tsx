@@ -5,6 +5,9 @@ import { useRef, useState } from "react";
 import TaskSubmitButton from "./submit-task-button";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import { isLoggedIn } from "@/app/todo/page";
+import useTodosStore from "@/zustand/todos-store";
+import initialTodo from "@/helpers/initial-todo";
 
 const initialState = {
    message: "",
@@ -15,16 +18,25 @@ const initialState = {
 export default function TaskForm({ setIsForm }: { setIsForm: (isForm: boolean) => void }) {
    const [state, setState] = useState(initialState);
    const formRef = useRef<HTMLFormElement>(null);
+   const { addTodo } = useTodosStore();
 
 
    const clientAction = async (formData: FormData) => {
-      const response = await createTodo(formData);
-      if (response.error) {
-         setState({ ...state, error: true, message: response.message });
+      if (formData.get("title") === "") {
+         setState({ ...state, error: true, message: "String must contain at least 1 character(s)" });
          return;
       }
-      formRef.current?.reset();
-      toastSuccess(response.message);
+      if (isLoggedIn) {
+         const response = await createTodo(formData);
+         if (response.error) {
+            setState({ ...state, error: true, message: response.message });
+            return;
+         }
+         formRef.current?.reset();
+      } else {
+         addTodo(initialTodo(formData.get("title") as string));
+      }
+      toastSuccess('Todo Added Successfully!');
    };
 
    return (
