@@ -1,0 +1,27 @@
+'use client';
+import { Todo } from "@/lib/types";
+import useTodosStore from "@/zustand/todos-store";
+import Image from "next/image";
+import RestoreTaskButton from "./restore-task-button";
+import RemoveTaskButton from "./remove-task-button";
+import { isLoggedIn } from "@/lib/utils";
+
+export default function DisplayCompletedTodos({ data }: { data: Todo[] }) {
+   const { todos } = useTodosStore();
+
+   const todoList = isLoggedIn ? data : todos.filter((todo) => todo.type === "completed").reverse();
+   if (!todoList.length) return <Image className="mx-auto" unoptimized src="/images/complete-empty.gif" alt="complete task empty" width={450} height={300} />
+   return (
+      <ul>
+         {todoList.map((row) => {
+            return (
+               <li key={row.id} className="grid grid-cols-4 gap-4 mb-3">
+                  <p className="col-span-2 font-bold">{row.title}</p>
+                  <RestoreTaskButton id={row.id} />
+                  <RemoveTaskButton id={row.id} />
+               </li>
+            );
+         })}
+      </ul>
+   )
+}

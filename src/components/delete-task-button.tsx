@@ -1,49 +1,61 @@
 "use client";
-import { moveTaskToRecycleBin, removeTask } from "@/services";
 import { toastError, toastSuccess } from "@/helpers/global-toasts";
-import { CircleAlert } from "lucide-react";
+import { moveTaskToRecycleBin, removeTask } from "@/services";
+import useTodosStore from "@/zustand/todos-store";
+import { CircleAlert, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "./ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "./ui/dialog";
+import { isLoggedIn } from "@/lib/utils";
 
 
-export default function DeleteTaskButton({ id }: { id: number }) {
+export default function DeleteTaskButton({ id }: { id: string }) {
     const [recycleBinPending, setRecycleBinPending] = useState<boolean>();
     const [removeTaskPending, setRemoveTaskPending] = useState<boolean>();
+    const { removeTodo, moveTodoToRecycleBin } = useTodosStore();
 
-    const handleRemoveTask = async (id: number) => {
-        setRemoveTaskPending(true);
-        const data = await removeTask(id);
-        setRemoveTaskPending(false);
-        if (data.error) {
-            return toastError(data.message);
+    const handleRemoveTask = async (id: string) => {
+        if (isLoggedIn) {
+            setRemoveTaskPending(true);
+            const data = await removeTask(id);
+            setRemoveTaskPending(false);
+            if (data.error) {
+                return toastError(data.message);
+            }
+        } else {
+            removeTodo(id);
         }
-        toastSuccess(data.message)
+        toastSuccess("Task removed!")
     }
 
-    const handleRecycleBin = async (id: number) => {
-        setRecycleBinPending(true);
-        const data = await moveTaskToRecycleBin(id);
-        setRecycleBinPending(false);
-        if (data.error) {
-            toastError(data.message);
-            return;
+    const handleRecycleBin = async (id: string) => {
+        if (isLoggedIn) {
+            setRecycleBinPending(true);
+            const data = await moveTaskToRecycleBin(id);
+            setRecycleBinPending(false);
+            if (data.error) {
+                toastError(data.message);
+                return;
+            }
+        } else {
+            moveTodoToRecycleBin(id);
         }
-        toastSuccess(data.message);
+        toastSuccess("Task moved to Recycle Bin!");
     }
 
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button className="w-full border border-transparent bg-red-700 text-white focus:ring-4 focus:ring-red-300 enabled:hover:bg-red-800 dark:bg-red-600 dark:focus:ring-red-900 dark:enabled:hover:bg-red-700">Remove</Button>
+                <Button className="w-fit md:w-full mx-auto h-full max-md:p-4 border border-transparent bg-red-700 text-white focus:ring-4 focus:ring-red-300 enabled:hover:bg-red-800 dark:bg-red-600 dark:focus:ring-red-900 dark:enabled:hover:bg-red-700">
+                    <Trash2 className="md:hidden block" />
+                    <span className="hidden md:block">Remove</span>
+                </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader>
-                    <DialogTitle>Remove task</DialogTitle>
-                    <DialogDescription>
-                        You will delete this task finally, if you click Yes. Click Recycle bin to move it to Recycle Bin.
-                    </DialogDescription>
-                </DialogHeader>
+                <DialogTitle>Remove task</DialogTitle>
+                <DialogDescription>
+                    You will delete this task finally, if you click Yes. Click Recycle bin to move it to Recycle Bin.
+                </DialogDescription>
                 <div className="text-center">
                     <CircleAlert className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
                     <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">

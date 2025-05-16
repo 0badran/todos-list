@@ -1,25 +1,13 @@
-import RemoveTaskButton from "@/components/remove-task-button";
-import RestoreTaskButton from "@/components/restore-task-button";
+import DisplayDeletedTodos from "@/components/display-deleted-todos";
+import { Todo } from "@/lib/types";
 import { sql } from "@vercel/postgres";
-import Image from "next/image";
 
 
 
 export default async function RecycleBin() {
 
-    const { rows } = await sql`SELECT id, title, type FROM todos WHERE type='deleted';`;
-    if (!rows.length) return <Image className="mx-auto" unoptimized src="/images/delete-empty.gif" alt="delete task empty" width={450} height={300} />
+    const { rows } = await sql<Todo>`SELECT id, title, type FROM todos WHERE type='deleted';`;
     return (
-        <ul>
-            {rows.map((row) => {
-                return (
-                    <li key={row.id} className="grid grid-cols-4 gap-4 mb-3">
-                        <p className="col-span-2 font-bold">{row.title}</p>
-                        <RestoreTaskButton id={row.id} />
-                        <RemoveTaskButton id={row.id} />
-                    </li>
-                );
-            })}
-        </ul>
+        <DisplayDeletedTodos data={rows} />
     )
 }
