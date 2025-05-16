@@ -1,6 +1,5 @@
 "use client";
 
-import { isLoggedIn } from "@/app/todo/page";
 import { toastError, toastSuccess } from "@/helpers/global-toasts";
 import { removeTask } from "@/services";
 import useTodosStore from "@/zustand/todos-store";
@@ -8,6 +7,7 @@ import { CircleAlert } from 'lucide-react';
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "./ui/dialog";
+import { isLoggedIn } from "@/lib/utils";
 
 export default function RemoveTaskButton({ id }: { id: string }) {
     const [isPending, setIsPending] = useState<boolean>();

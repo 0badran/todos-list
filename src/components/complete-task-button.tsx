@@ -4,8 +4,8 @@ import { toastError, toastSuccess } from "@/helpers/global-toasts";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import useTodosStore from "@/zustand/todos-store";
-import { isLoggedIn } from "@/app/todo/page";
 import { ListCheck, LoaderCircle } from "lucide-react";
+import { isLoggedIn } from "@/lib/utils";
 
 
 export default function CompleteTaskButton({ id }: { id: string }) {

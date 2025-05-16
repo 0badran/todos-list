@@ -5,9 +5,9 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { editTask } from "@/services";
 import { toastError, toastSuccess } from "@/helpers/global-toasts";
-import { isLoggedIn } from "@/app/todo/page";
 import useTodosStore from "@/zustand/todos-store";
 import { LoaderCircle, Save, SquarePen, X } from "lucide-react";
+import { isLoggedIn } from "@/lib/utils";
 
 export default function EditTask({ id, title }: { id: string, title: string }) {
    const [editingId, setEditingId] = useState<string | null>(null);

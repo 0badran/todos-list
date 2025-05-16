@@ -1,5 +1,4 @@
 "use client";
-import { isLoggedIn } from "@/app/todo/page";
 import { toastError, toastSuccess } from "@/helpers/global-toasts";
 import { moveTaskToRecycleBin, removeTask } from "@/services";
 import useTodosStore from "@/zustand/todos-store";
@@ -7,6 +6,7 @@ import { CircleAlert, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "./ui/dialog";
+import { isLoggedIn } from "@/lib/utils";
 
 
 export default function DeleteTaskButton({ id }: { id: string }) {

@@ -1,10 +1,10 @@
 'use client';
-import { isLoggedIn } from "@/app/todo/page";
 import { Todo } from "@/lib/types";
 import useTodosStore from "@/zustand/todos-store";
 import Image from "next/image";
 import RestoreTaskButton from "./restore-task-button";
 import RemoveTaskButton from "./remove-task-button";
+import { isLoggedIn } from "@/lib/utils";
 
 export default function DisplayDeletedTodos({ data }: { data: Todo[] }) {
    const { todos } = useTodosStore();

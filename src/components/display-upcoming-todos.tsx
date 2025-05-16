@@ -5,7 +5,7 @@ import DeleteTaskButton from "./delete-task-button";
 import EditTask from "./edit-task";
 import { Todo } from "@/lib/types";
 import Image from "next/image";
-import { isLoggedIn } from "@/app/todo/page";
+import { isLoggedIn } from "@/lib/utils";
 
 export default function DisplayUpcomingTodos({ data }: { data: Todo[] }) {
    const { todos } = useTodosStore();

@@ -5,9 +5,9 @@ import { useRef, useState } from "react";
 import TaskSubmitButton from "./submit-task-button";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { isLoggedIn } from "@/app/todo/page";
 import useTodosStore from "@/zustand/todos-store";
 import initialTodo from "@/helpers/initial-todo";
+import { isLoggedIn } from "@/lib/utils";
 
 const initialState = {
    message: "",
