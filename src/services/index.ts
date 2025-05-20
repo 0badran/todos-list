@@ -1,5 +1,7 @@
 "use server";
 import { TodoSchema } from "@/lib/definitions";
+import { Todo } from "@/lib/types";
+import { stackServerApp } from "@/stack";
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 
@@ -12,7 +14,7 @@ export async function createTodo(formData: FormData) {
       return { success: false, error: true, message: "String must contain at least 1 character(s)" };
    }
 
-   await sql`INSERT INTO todos(title) VALUES (${result.data.task})`;
+   await sql`INSERT INTO todos(title,uuid) VALUES (${result.data.task},${formData.get("uuid") as string})`;
    revalidatePath("/todo");
    return { success: result.success, error: false, message: "Todo Added Successfully!" };
 }
@@ -60,4 +62,10 @@ export async function editTask(id: string, newTitle: string) {
    await sql`UPDATE todos SET title = ${newTitle} WHERE id = ${id}`;
    revalidatePath("/todo");
    return { success: true, error: false, message: "Task edited successfully!" };
+}
+
+export async function getAllCurrentUserTasks(type: Todo["type"]) {
+   const user = await stackServerApp.getUser();
+   const { rows } = await sql<Todo>`SELECT id, title FROM todos WHERE type = ${type} AND uuid = ${user?.id};`;
+   return rows;
 }

@@ -1,15 +1,14 @@
 'use client';
+import { Todo } from "@/lib/types";
 import useTodosStore from "@/zustand/todos-store";
+import Image from "next/image";
 import CompleteTaskButton from "./complete-task-button";
 import DeleteTaskButton from "./delete-task-button";
 import EditTask from "./edit-task";
-import { Todo } from "@/lib/types";
-import Image from "next/image";
-import { isLoggedIn } from "@/lib/utils";
 
 export default function DisplayUpcomingTodos({ data }: { data: Todo[] }) {
    const { todos } = useTodosStore();
-   const todoList = isLoggedIn ? data : todos.filter((todo) => todo.type === "upcoming").reverse();
+   const todoList = !!data.length ? data : todos.filter((todo) => todo.type === "upcoming").reverse();
 
    if (!todoList.length) return <Image className="mx-auto" unoptimized src="/images/todo-empty.gif" alt="todo task empty" width={450} height={300} />
 

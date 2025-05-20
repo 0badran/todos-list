@@ -6,17 +6,9 @@ export async function GET() {
         const tables = await Promise.all([
             sql`CREATE TABLE IF NOT EXISTS todos(
                 id SERIAL PRIMARY KEY,
+                uuid TEXT NOT NULL,
                 title TEXT NOT NULL,
                 type TEXT DEFAULT 'upcoming',
-                createdAt TIMESTAMP DEFAULT NOW(),
-                updatedAt TIMESTAMP DEFAULT NOW()
-            );`,
-            sql`CREATE TABLE IF NOT EXISTS users(
-                id SERIAL PRIMARY KEY,
-                firstName TEXT NOT NULL,
-                lastName TEXT NOT NULL,
-                email TEXT NOT NULL,
-                hash TEXT NOT NULL,
                 createdAt TIMESTAMP DEFAULT NOW(),
                 updatedAt TIMESTAMP DEFAULT NOW()
             );`

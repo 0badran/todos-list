@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
-import Navbar from "@/components/navbar";
-import Sidebar from "@/components/sidebar";
-import { Toaster } from "@/components/ui/sonner";
-import TopButton from "@/components/top-button";
-import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import TopButton from "@/components/top-button";
+import { Toaster } from "@/components/ui/sonner";
+import { StackProvider, StackTheme } from "@stackframe/stack";
+import type { Metadata } from "next";
+import { stackServerApp } from "../stack";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Todo List App",
@@ -16,25 +16,32 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const theme = {
+    dark: {
+      popover: '#1e2939',
+      accent: '#dff2fe',
+      accentForeground: '#0084D1',
+      muted: '#1e2939',
+      secondary: '#0084D1',
+    },
+  }
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body className='antialiased dark:bg-gray-800'>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Navbar />
-          <Sidebar />
-          <main className="grid">
-            <div className="mt-20 w-full px-6 dark:text-white sm:px-8 md:px-10 lg:w-2/3 xl:3/4 2xl:4/5 lg:place-self-end lg:ml-5 xl:ml-8 2xl:ml-12">
+        <StackProvider app={stackServerApp}>
+          <StackTheme theme={theme}>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
               {children}
-            </div>
-          </main>
-          <Toaster position="top-center" />
-          <TopButton />
-        </ThemeProvider>
+              <Toaster position="bottom-right" />
+              <TopButton />
+            </ThemeProvider>
+          </StackTheme>
+        </StackProvider>
       </body>
     </html>
   );

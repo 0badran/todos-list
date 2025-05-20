@@ -14,7 +14,7 @@ export default function TaskBoard() {
 
 
   return (
-    <div className="bg-cover bg-[url('/images/bg-createTask.jpg')] lg:bg-[url('/images/bg-createTask1.jpg')] rounded mt-7 p-16 text-white dark:text-gray-400">
+    <div className="bg-cover bg-[url('/images/create-task-mobile.webp')] lg:bg-[url('/images/create-task-desktop.webp')] rounded mt-7 p-16 text-white dark:text-gray-400">
       {
         isForm ?
           <TaskForm setIsForm={setIsForm} />

@@ -1,13 +1,13 @@
 "use client";
-import { createTodo } from "@/services";
 import { toastSuccess } from "@/helpers/global-toasts";
+import initialTodo from "@/helpers/initial-todo";
+import { createTodo } from "@/services";
+import useTodosStore from "@/zustand/todos-store";
+import { useUser } from "@stackframe/stack";
 import { useRef, useState } from "react";
 import TaskSubmitButton from "./submit-task-button";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import useTodosStore from "@/zustand/todos-store";
-import initialTodo from "@/helpers/initial-todo";
-import { isLoggedIn } from "@/lib/utils";
 
 const initialState = {
    message: "",
@@ -19,6 +19,8 @@ export default function TaskForm({ setIsForm }: { setIsForm: (isForm: boolean) =
    const [state, setState] = useState(initialState);
    const formRef = useRef<HTMLFormElement>(null);
    const { addTodo } = useTodosStore();
+   const user = useUser();
+
 
 
    const clientAction = async (formData: FormData) => {
@@ -26,7 +28,8 @@ export default function TaskForm({ setIsForm }: { setIsForm: (isForm: boolean) =
          setState({ ...state, error: true, message: "String must contain at least 1 character(s)" });
          return;
       }
-      if (isLoggedIn) {
+      if (user) {
+         formData.append("uuid", user.id);
          const response = await createTodo(formData);
          if (response.error) {
             setState({ ...state, error: true, message: response.message });
