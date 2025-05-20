@@ -1,10 +1,10 @@
 "use client";
 import { useSidebarState } from "@/zustand/sidebar-state";
 import clsx from "clsx";
+import { Grid, Timer } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Grid, Timer, List } from "lucide-react";
-import { Drawer, DrawerContent, DrawerTrigger } from "./ui/drawer";
+import { Drawer, DrawerContent } from "./ui/drawer";
 
 const links = [
   {
@@ -26,9 +26,6 @@ export default function Sidebar() {
 
   return (
     <Drawer direction="left" open={isOpen} onOpenChange={setIsOpen}>
-      <DrawerTrigger asChild>
-        <List />
-      </DrawerTrigger>
       <DrawerContent className="h-screen w-96 dark:bg-gray-800">
         {
           links.map((link) => {

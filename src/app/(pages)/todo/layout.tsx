@@ -1,4 +1,4 @@
-import Home from "@/app/page";
+import Home from "@/app/(pages)/page";
 
 export default function TodoLayout({
     children,
