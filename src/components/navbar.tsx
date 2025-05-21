@@ -6,20 +6,27 @@ import Link from "next/link";
 import ModeToggle from "./mode-toggle";
 import { Button } from "./ui/button";
 
-
 export default function Navbar() {
   const { isOpen, setIsOpen } = useSidebarState();
 
   return (
-    <nav className="bg-sky-400 fixed top-0 z-20 w-full p-2 text-white rounded-t-md dark:text-gray-400 dark:bg-sky-800">
-      <div className="container mx-auto grid grid-cols-5 gap-4 content-center">
+    <nav className="bg-sky-400 fixed top-0 z-20 w-full h-17 flex items-center text-white rounded-t-md dark:text-gray-400 dark:bg-sky-800">
+      <div className="container mx-auto grid grid-cols-5 gap-2 md:gap-4">
         {/* Left */}
         <div className="col-span-1 flex gap-2 justify-between items-center md:gap-6">
-          <Button size='icon' onClick={() => setIsOpen(!isOpen)} className="bg-transparent cursor-pointer shadow-none">
+          <Button
+            size="icon"
+            onClick={() => setIsOpen(!isOpen)}
+            className="bg-transparent cursor-pointer shadow-none"
+          >
             <List className="text-xl md:text-2xl dark:text-gray-400" />
           </Button>
-          <Button asChild size='icon' className="bg-transparent cursor-pointer shadow-none">
-            <Link href='/'>
+          <Button
+            asChild
+            size="icon"
+            className="bg-transparent cursor-pointer shadow-none"
+          >
+            <Link href="/">
               <Home className="text-xl md:text-2xl dark:text-gray-400" />
             </Link>
           </Button>
@@ -35,6 +42,6 @@ export default function Navbar() {
           <UserButton />
         </div>
       </div>
-    </nav >
-  )
+    </nav>
+  );
 }
